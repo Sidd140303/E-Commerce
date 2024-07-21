@@ -9,6 +9,7 @@ import Error from "./components/Error";
 import { GlobalStyle } from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const theme = {
@@ -49,6 +50,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<Error />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
