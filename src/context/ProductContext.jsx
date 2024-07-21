@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "../reducers/ProductReducer";
 
 const AppContext = createContext();
@@ -32,4 +32,9 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>
   );
 };
-export { AppProvider };
+
+const useProductContext = () => {
+  return useContext(AppContext);
+};
+
+export { AppProvider, AppContext, useProductContext };
