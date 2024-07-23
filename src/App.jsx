@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
-import Product from "./components/Product";
+import Products from "./components/Products";
 import Contact from "./components/Contact";
 import SingleProduct from "./components/SingleProduct";
 import Cart from "./Cart";
@@ -44,7 +44,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/product" element={<Product />} />
+          <Route path="/product" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/sp/:id" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />

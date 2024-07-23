@@ -8,6 +8,8 @@ import { Container } from "../styles/Container";
 import FormatPrice from "../Helpers/FormatPrice";
 import { TbReplace, TbTruckDelivery } from "react-icons/tb";
 import { MdSecurity } from "react-icons/md";
+import Star from "./Star";
+import AddCart from "./AddCart";
 
 const API = "https://api.pujakaitem.com/api/products";
 
@@ -47,8 +49,7 @@ function SingleProduct() {
           </div>
           <div className="product-data">
             <h2>{name}</h2>
-            <p>{stars}</p>
-            <p>{reviews}</p>
+            <Star stars={stars} review={reviews} />
             <p className="product-data-price">
               <b> MRP: </b>
               <del>
@@ -70,11 +71,6 @@ function SingleProduct() {
               </div>
 
               <div className="product-warranty-data">
-                <TbTruckDelivery className="warranty-icon" />
-                <p>Thapa Delivered </p>
-              </div>
-
-              <div className="product-warranty-data">
                 <MdSecurity className="warranty-icon" />
                 <p>2 Year Warranty </p>
               </div>
@@ -88,6 +84,8 @@ function SingleProduct() {
                 Brand :<span> {company} </span>
               </p>
             </div>
+            <hr />
+            {stock > 0 && <AddCart product={singleProduct} />}
           </div>
         </div>
       </Container>

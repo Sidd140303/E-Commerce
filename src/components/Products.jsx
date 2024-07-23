@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import FilterSection from "../ProductPage/FilterSection";
+import Sort from "../ProductPage/Sort";
+import ProductList from "../ProductPage/ProductList";
 
 const Wrapper = styled.section`
   .grid-filter-column {
@@ -14,7 +17,23 @@ const Wrapper = styled.section`
 `;
 
 function Product() {
-  return <Wrapper></Wrapper>;
+  return (
+    <Wrapper>
+      <div className="container grid grid-filter-column">
+        <div>
+          <FilterSection />
+        </div>
+        <section className="product-view--sort">
+          <div className="sort-filter">
+            <Sort />
+          </div>
+          <div className="main-product">
+            <ProductList />
+          </div>
+        </section>
+      </div>
+    </Wrapper>
+  );
 }
 
 export default Product;
