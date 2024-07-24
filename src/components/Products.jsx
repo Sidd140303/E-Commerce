@@ -16,7 +16,7 @@ const Wrapper = styled.section`
   }
 `;
 
-function Product() {
+function Products() {
   return (
     <Wrapper>
       <div className="container grid grid-filter-column">
@@ -36,4 +36,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default Products;
