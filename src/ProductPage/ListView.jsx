@@ -1,13 +1,30 @@
 import React from "react";
 import styled from "styled-components";
-import Product from "../components/Product";
+import FormatPrice from "../Helpers/FormatPrice";
+import { Button } from "../styles/Button";
+import { NavLink } from "react-router-dom";
 
-function GridView({ products }) {
+function ListView({ products }) {
   return (
     <Wrapper className="section">
-      <div className="container grid grid-three-column">
+      <div className="container grid">
         {products.map((elem) => {
-          return <Product key={elem.id} {...elem} />;
+          const { id, name, image, price, description } = elem;
+          return (
+            <div className="card grid grid-two-column">
+              <figure>
+                <img src={image} alt={name} />
+              </figure>
+              <div className="card-data">
+                <h3>{name}</h3>
+                <FormatPrice price={price} />
+                <p>{description.slice(0, 99)}...</p>
+                <NavLink to={`/sp/${id}`}>
+                  <Button className="btn">Read more</Button>
+                </NavLink>
+              </div>
+            </div>
+          );
         })}
       </div>
     </Wrapper>
@@ -59,36 +76,27 @@ const Wrapper = styled.section`
   }
 
   .card {
-    background-color: ${({ theme }) => theme.colors.bg};
-    border-radius: 1rem;
+    border: 0.1rem solid rgb(170 170 170 / 40%);
 
     .card-data {
-      padding: 0 1rem;
-    }
-
-    .card-data-flex {
-      margin: 2rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-data--price {
-      color: ${({ theme }) => theme.colors.helper};
+      padding: 0 2rem;
     }
 
     h3 {
-      color: ${({ theme }) => theme.colors.text};
+      margin: 2rem 0;
+      font-weight: 300;
+      font-size: 2.4rem;
       text-transform: capitalize;
     }
 
     .btn {
-      margin: 2rem auto;
+      margin: 2rem 0;
       background-color: rgb(0 0 0 / 0%);
       border: 0.1rem solid rgb(98 84 243);
       display: flex;
       justify-content: center;
       align-items: center;
+      color: rgb(98 84 243);
 
       &:hover {
         background-color: rgb(98 84 243);
@@ -102,7 +110,11 @@ const Wrapper = styled.section`
         font-size: 1.4rem;
       }
     }
+
+    .btn-main .btn:hover {
+      color: #fff;
+    }
   }
 `;
 
-export default GridView;
+export default ListView;
