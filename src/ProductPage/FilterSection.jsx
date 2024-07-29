@@ -1,22 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 import { useFilterContext } from "../context/FilterContext";
+import { FaCheck } from "react-icons/fa";
+import FormatPrice from "../Helpers/FormatPrice";
+import { Button } from "../styles/Button";
 
 function FilterSection() {
   const {
-    filters: { text, category },
+    filters: { text, category, color, price, maxPrice, minPrice },
     all_products,
     updateFilterValue,
+    clearFilters,
   } = useFilterContext();
 
   const getUniqueData = (data, property) => {
     let newVal = data.map((elem) => {
       return elem[property];
     });
+
+    if (property === "colors") {
+      // return (newVal = ["All", ...new Set([].concat(...newVal))]);
+      newVal = newVal.flat();
+    }
     return (newVal = ["All", ...new Set(newVal)]);
   };
   const categoryData = getUniqueData(all_products, "category");
   const companyData = getUniqueData(all_products, "company");
+  const colorsData = getUniqueData(all_products, "colors");
   return (
     <Wrapper>
       <div className="filter-search">
@@ -41,6 +51,7 @@ function FilterSection() {
                 type="button"
                 name="category"
                 value={elem}
+                className={elem === category ? "active" : ""}
                 onClick={updateFilterValue}
               >
                 {elem}
@@ -48,27 +59,80 @@ function FilterSection() {
             );
           })}
         </div>
-        <div className="filter-company">
-          <h3>Company</h3>
-          <div>
-            <form action="#">
-              <select
-                name="company"
-                id="company"
-                className="filter-company--select"
+      </div>
+      <div className="filter-company">
+        <h3>Company</h3>
+        <div>
+          <form action="#">
+            <select
+              name="company"
+              id="company"
+              className="filter-company--select"
+              onClick={updateFilterValue}
+            >
+              {companyData.map((elem, idx) => {
+                return (
+                  <option value={elem} key={idx} name="company">
+                    {elem}
+                  </option>
+                );
+              })}
+            </select>
+          </form>
+        </div>
+      </div>
+      <div className="filter-colors colors">
+        <h3>Colors</h3>
+        <div className="filter-color-style">
+          {colorsData.map((elem, idx) => {
+            if (elem === "All") {
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  value={elem}
+                  name="color"
+                  className="color-all--style"
+                  onClick={updateFilterValue}
+                >
+                  All
+                </button>
+              );
+            }
+            return (
+              <button
+                key={idx}
+                type="button"
+                value={elem}
+                name="color"
+                className={color === elem ? "active btnStyle" : "btnStyle"}
+                style={{ backgroundColor: elem }}
                 onClick={updateFilterValue}
               >
-                {companyData.map((elem, idx) => {
-                  return (
-                    <option value={elem} key={idx} name="company">
-                      {elem}
-                    </option>
-                  );
-                })}
-              </select>
-            </form>
-          </div>
+                {color === elem ? <FaCheck className="checkStyle" /> : null}
+              </button>
+            );
+          })}
         </div>
+      </div>
+
+      <div className="filter_price">
+        <h3>Price</h3>
+        <p>{<FormatPrice price={price} />}</p>
+        <input
+          type="range"
+          name="price"
+          id="price"
+          min={minPrice}
+          max={maxPrice}
+          onChange={updateFilterValue}
+          value={price}
+        />
+      </div>
+      <div className="filter-clear">
+        <Button className="btn" onClick={clearFilters}>
+          Clear Filters
+        </Button>
       </div>
     </Wrapper>
   );

@@ -1,10 +1,18 @@
 const FilterReducer = (state, action) => {
   switch (action.type) {
     case "LOAD_FILTER_PRODUCTS":
+
+      let priceArr = action.payload.map((elem) => elem.price)
+      // let maxPrice = priceArr.reduce((initialVal, elem) => Math.max(initialVal, elem), 0)
+      let maxPrice = Math.max(...priceArr)
+
       return {
         ...state,
         filter_products: [...action.payload],
         all_products: [...action.payload],
+        filters: {
+          ...state.filters, maxPrice, price: maxPrice
+        }
       };
     case "SET_GRIDVIEW":
       return {
@@ -50,35 +58,55 @@ const FilterReducer = (state, action) => {
           ...state.filters, [name]: value,
         }
       }
+
+    case "CLEAR_FILTERS":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          text: "",
+          category: "All",
+          company: "All",
+          color: "All",
+          maxPrice: 0,
+          price: state.filters.maxPrice,
+          minPrice: state.filters.maxPrice,
+
+        }
+      }
+
     case "FILTER_PRODUCTS":
       let { all_products } = state
       let tempFilterProduct = [...all_products]
 
-      const { text, category, company } = state.filters;
+      const { text, category, company, color, price } = state.filters;
       if (text) {
         tempFilterProduct = tempFilterProduct.filter((elem) => {
           return elem.name.toLowerCase().includes(text);
         })
       }
-      // if (category !== "All") {
-      //   tempFilterProduct = tempFilterProduct.filter((elem) => {
-      //     elem.category === category;
-      //   })
-      // }
-      // if (company !== "All") {
-      //   tempFilterProduct = tempFilterProduct.filter(
-      //     (curElem) => curElem.company.toLowerCase() === company.toLowerCase()
-      //   )
-      // }
-      if (category !== "All") {
+      if (category !== 'All') {
         tempFilterProduct = tempFilterProduct.filter(
-          (curElem) => { return curElem.category === category }
+          (curElem) => curElem.category === category
         );
       }
 
-      if (company !== "All") {
+      if (company !== 'All') {
         tempFilterProduct = tempFilterProduct.filter(
-          (curElem) => { return curElem.company === company }
+          (curElem) => curElem.company === company
+        );
+      }
+      if (color !== 'All') {
+        tempFilterProduct = tempFilterProduct.filter(
+          (curElem) => curElem.colors.includes(color)
+        );
+      }
+      if (price === 0) {
+        tempFilterProduct = tempFilterProduct.filter(
+          (curElem) => curElem.price == price)
+      } else {
+        tempFilterProduct = tempFilterProduct.filter(
+          (curElem) => curElem.price <= price
         );
       }
       return {
