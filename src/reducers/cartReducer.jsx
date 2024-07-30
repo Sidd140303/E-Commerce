@@ -98,7 +98,7 @@ function cartReducer(state, action) {
       {
         total_item: 0,
         total_price: 0,
-      },0
+      }
     );
     return {
       ...state,
