@@ -15,7 +15,6 @@ This project focuses on the frontend, utilizing **React**, **JavaScript**, **Mat
 
 - **React**: Frontend library for building the user interface.
 - **JavaScript**: For adding interactivity and managing application logic.
-- **Material UI**: For pre-built components to ensure a clean and modern design.
 - **Tailwind CSS**: For styling the application with utility-first CSS.
 - **Context API/Redux (Optional)**: For state management across the application.
 - **Axios**: For making API calls to fetch product data (if using a backend).
