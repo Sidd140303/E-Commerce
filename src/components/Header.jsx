@@ -7,7 +7,7 @@ function Header() {
   return (
     <MainHeader>
       <NavLink to="/">
-        <img src="./images/s.png" alt="store img" />
+        <img src="./images/s.png" alt="store img" height={100} />
       </NavLink>
       <Nav />
     </MainHeader>
